@@ -2,7 +2,7 @@
 //连接数据库
 import Db from "../../untils/db"
 import {tableName,admin_id} from "../../untils/config"
-const {user} = tableName
+const {user,menu} = tableName
 Page({
 
   /**
@@ -13,6 +13,8 @@ Page({
     userInfo:{},
     switchIndex:0,
     recipes:[],
+    currentPage:1,//记录当前菜单的页数
+    isMore:true, //标识下拉时有没有更多的数据，当数据显示完了hi后改为false
   types:[
     {typename:"营养菜谱",'src':"../../static/type/type01.jpg"},
     {typename:"儿童菜谱",'src':"../../static/type/type02.jpg"},
@@ -94,7 +96,7 @@ Page({
         userInfo:wx.getStorageSync("userInfo")
       })
       //重新进来之后，假如用户本地有缓存信息，同样显示该用户 发布的菜谱
-
+      this._getMyMenu(1)
     }else{
       //假如缓存被清掉，判断用户有没有授权
       //目前有问题，得不到res.authSetting["scope.userInfo"]
@@ -119,7 +121,7 @@ Page({
                   userInfo
                 })
                 //同样去获取用户发布的菜谱
-
+                this._getMyMenu(1)
               }
             })
           }
@@ -192,7 +194,7 @@ Page({
         userInfo:userInfo
       })
       //登录成功后，获取该用户发布过的菜单
-
+      this._getMyMenu(1)
 
       //一旦登录成功，隐藏掉Loading的图标
       wx.hideLoading();
@@ -206,8 +208,51 @@ Page({
     }
   },
   //获取用户发布的菜单的函数,每次不都取出来，用户下滑之后才都取出来
-  _getMyMenu:function(p){ //p代表页码
-    Db.collection
+  _getMyMenu:async function(p){ //p代表页码
+    wx.showLoading({
+      title:"加载中"
+    })
+    let _openid = wx.getStorageSync("_openid");
+    //取得时候两个条件 自己发布的 且menu_status的状态是未删除的
+    let res = await Db.findByPage(menu,{_openid,menu_status:0},p,4,{field:"menu_time",sort:"desc"})
+    if(res.data.length != 0){
+      
+      this.setData({
+          recipes:this.data.recipes.concat(res.data)
+      })
+      wx.hideLoading()
+    }else{
+      this.setData({
+        isMore:false
+      })
+
+      wx.showToast({
+        title:"没有更多了,亲",
+        icon:"none",
+        duration:1000
+      })
+    }
+
+  },
+  //下拉到底部时执行该方法
+  onReachBottom:function(){
+    if(this.data.switchIndex === 0){
+      if(this.data.isMore){
+        this.data.currentPage++;
+        console.log(this.data.currentPage);
+        this._getMyMenu(this.data.currentPage)
+      }else{
+        wx.showToast({
+          title:"我们是有底线的，亲",
+          icon:"none",
+          duration:1000
+        })
+      }
+    }
+    
+      
+    
+    
   },
   _delStyle(){
     wx.showModal({
