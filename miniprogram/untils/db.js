@@ -1,5 +1,7 @@
 //首先链接数据库
 const db = wx.cloud.database();
+//在my.js的_getMyCate中使用
+const _ = db.command;
 //获取数据  参数where表示通过什么条件去查找，where是一个空对象是表示没有条件
 const findByWhere = (table,where={})=>{
   return db.collection(table).where(where).get()
@@ -76,5 +78,6 @@ export default {
   findAll,
   removeById,
   updateById,
-  findByPage
+  findByPage,
+  _
 }
