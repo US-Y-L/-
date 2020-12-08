@@ -67,6 +67,16 @@ const findByPage = (table,where={},p=1,limit=10,order=
   .limit(limit)
   .orderBy(order.field,order.sort)
   .get()
+},
+//通过分页的方式获取数据
+const findByPage=(table,where={},p=1,limit=6,order=
+  {field:"_id",sort:"asc"})=>{
+    let start = (p-1)*limit
+  db.collection(table).where(where)
+  .skip(start) //从第几页开始查
+  .limit(limit) //一页显示多少条
+  .orderBy(order.field,order.sort)
+  .get()
 }
 
 
@@ -76,5 +86,6 @@ export default {
   findAll,
   removeById,
   updateById,
+  findByPage,
   findByPage
 }
