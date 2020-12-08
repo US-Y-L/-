@@ -93,6 +93,8 @@ Page({
         isLogin:true,
         userInfo:wx.getStorageSync("userInfo")
       })
+      //重新进来之后，假如用户本地有缓存信息，同样显示该用户 发布的菜谱
+
     }else{
       //假如缓存被清掉，判断用户有没有授权
       //目前有问题，得不到res.authSetting["scope.userInfo"]
@@ -116,7 +118,8 @@ Page({
                   isLogin:true,
                   userInfo
                 })
-                // console.log(res);
+                //同样去获取用户发布的菜谱
+
               }
             })
           }
@@ -188,7 +191,8 @@ Page({
         isLogin:true,
         userInfo:userInfo
       })
-      //获取用户菜谱
+      //登录成功后，获取该用户发布过的菜单
+
 
       //一旦登录成功，隐藏掉Loading的图标
       wx.hideLoading();
@@ -200,6 +204,10 @@ Page({
         duration:1500
       })
     }
+  },
+  //获取用户发布的菜单的函数,每次不都取出来，用户下滑之后才都取出来
+  _getMyMenu:function(p){ //p代表页码
+    Db.collection
   },
   _delStyle(){
     wx.showModal({

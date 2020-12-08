@@ -37,6 +37,7 @@
       <!-- 菜单列表 -->
       <view style="display:{{switchIndex==0?'block':'none'}}">
         <!-- 没有东西 -->
+        <!-- 用户登录进来之后，才展示该用户发布过的菜谱 -->
         <view wx:if="{{ recipes.length == 0 }}" class="no-pbmenu">
           <image src="../../static/my/img01.jpg"></image>
           <view>您还没发布过菜单哦</view>
