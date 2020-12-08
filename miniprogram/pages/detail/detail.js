@@ -13,5 +13,7 @@ Page({
         "../../static/detail/8.jpg",
       ]
   },
-
+  onLoad:function(option){
+    console.log(option)
+  }
 })

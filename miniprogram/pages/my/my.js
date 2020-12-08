@@ -2,7 +2,7 @@
 //连接数据库
 import Db from "../../untils/db"
 import {tableName,admin_id} from "../../untils/config"
-const {user,menu} = tableName
+const {user,cate,menu} = tableName
 Page({
 
   /**
@@ -15,14 +15,7 @@ Page({
     recipes:[],
     currentPage:1,//记录当前菜单的页数
     isMore:true, //标识下拉时有没有更多的数据，当数据显示完了hi后改为false
-  types:[
-    {typename:"营养菜谱",'src':"../../static/type/type01.jpg"},
-    {typename:"儿童菜谱",'src':"../../static/type/type02.jpg"},
-    {typename:"家常菜谱",'src':"../../static/type/type03.jpg"},
-    {typename:"主食菜谱",'src':"../../static/type/type04.jpg"},
-    {typename:"西餐菜谱",'src':"../../static/type/type05.jpg"},
-    {typename:"早餐菜谱",'src':"../../static/type/type06.jpg"},
-  ],
+  types:[],
   lists:[
     {
       src:"../../static/list/list01.jpg",
@@ -147,16 +140,16 @@ Page({
       url:'../category/category'
     })
   },
-  //获取用户的菜谱
-  _getMyMenu:function(p){
-
-  },
   //切换选项卡,上面的样式变化
   _switchTab:function(e){
     let index = e.currentTarget.dataset.index;
     this.setData({
       switchIndex:index
     })
+
+    if(index == 1 && this.data.types.length == 0){
+      this._getMyCate()
+    }
   },
   //获取用户信息
   _getUserInfo:async function(e){
@@ -234,6 +227,47 @@ Page({
     }
 
   },
+  //查找我发布过的分类,一般切换选项卡到分类页的时候再去获取
+  _getMyCate:async function(){
+    wx.showLoading({
+      title:"加载中"
+    })
+    let _openid = wx.getStorageSync("_openid")
+      let res = await Db.findAll(menu,{_openid,menu_status:0})
+      // console.log(res);
+      if(res.data.length != 0){
+        let cate_id = res.data.map(item=>{
+          return item.cate_id
+        })
+        res=await Db.findAll(cate,{
+          _id:Db._.in(cate_id)
+        })
+        if(res.data.length!=0){
+          this.setData({
+            types:res.data
+          })
+        }
+      }
+      wx.hideLoading()
+  },
+  //点击菜谱图片进入到菜谱详情
+  _goDetail:function(e){
+    console.log(e);
+    let index = e.currentTarget.dataset.index
+    let {_id,menu_name} = this.data.recipes[index]
+    console.log(index)
+    wx.navigateTo({
+      url:`../detail/detail?id=${_id}&menuName=${menu_name}`
+    })
+  },
+  //点击列表页进入列表详情
+  _goList:function(e){
+      let index = e.currentTarget.dataset.index
+      let {_id,cateName}=this.data.types[index]
+      wx.navigateTo({
+        url:`../list/list?id=${_id}&cateName=${cateName}`
+      })
+  },
   //下拉到底部时执行该方法
   onReachBottom:function(){
     if(this.data.switchIndex === 0){
@@ -254,16 +288,31 @@ Page({
     
     
   },
-  _delStyle(){
+  //长按删除功能
+  _delMenu(e){
     wx.showModal({
       title:"删除提示",
-      content:"确定要删除么？",
-      
+      content:"您确定要删除么？",
+      success: async res=>{
+        if(res.confirm){
+          //执行删除操作，不是真的删，将菜谱里的menu_status改变状态
+          let index = e.currentTarget.dataset.index
+          let res = await Db.updateById(menu,this.data.recipes[index]._id,{menu_status:1})
+          if(res.stats.updated){ //表示删除成功
+            this.data.recipes.splice(index,1)
+            this.setData({
+              recipes:this.data.recipes
+            })
+            wx.showToast({
+              title:"删除成功",
+              icon:"success",
+              duration:1000
+            })
+          }
+        }
+      }
     })
-  },
-  //我发布过的分类,用户切换选项卡到分类的时候
-  _getMyCate:function(){
-
   }
+  
 
 })

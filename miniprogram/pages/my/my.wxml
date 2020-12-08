@@ -45,9 +45,10 @@
         <!-- 有东西 -->
         <view class="hot-recipe-list" wx:else>
           <block wx:for="{{ recipes }}" wx:key="_id">
-            <view class="hot-recipe-list-item" bindlongpress="_delStyle" data-index="{{ index }}">
+            <view class="hot-recipe-list-item" bindlongpress="_delMenu" data-index="{{ index }}">
               <!-- 图片 -->
-              <image src="{{ item.menu_img[0] }}"></image>
+              <image src="{{ item.menu_img[0] }}" data-index="{{index}}"
+               bindtap="_goDetail"></image>
               <!-- 名字 -->
               <view class="hot-recipe-list-item-title">{{ item.menu_name }}</view>
               <!-- 发布人及浏览次数 -->
@@ -73,10 +74,10 @@
     </view>
     <!-- 分类列表 -->
     <view class="type-list" style="display:{{switchIndex==1?'block':'none'}}">
-      <block wx:for="{{ types }}">
-        <view class="list-item">
-          <image src="{{ item.src }}"></image>
-          <text>{{ item.typename }}</text>
+      <block wx:for="{{ types }}" wx:key="_id">
+        <view class="list-item" bindtap="_goList" data-index="{{index}}">
+          <image src="../../imgs/index_09.jpg"></image>
+          <text>{{ item.cateName }}</text>
           <image class="onlyimage" src="../../static/my/next.jpg"></image>
         </view>
       </block>

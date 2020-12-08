@@ -19,7 +19,7 @@
 			<view class="weui-cells weui-cells_after-title">
 				<view class="weui-cell">
 					<view class="weui-cell__bd">
-						<radio-group name="recipeTypeid">
+						<radio-group name="recipeTypeid" >
 							<!-- 循环遍历菜谱分类 -->
 							<block wx:for="{{cates}}" wx:key="{{item.cateName}}">
               <!-- 给当前分类加了一个默认值，随便去了index为0的，第一个 -->

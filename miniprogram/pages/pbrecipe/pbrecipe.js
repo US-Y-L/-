@@ -60,8 +60,9 @@ Page({
       title:"载入中"
     })
     //1、判断数据的合法性
-    // console.log(e);
-    let {menu_name,cate_id,menu_info} = e.detail.value
+    console.log(e);
+    let {menu_name,recipeTypeid,menu_info} = e.detail.value
+    // let cate_id = recipeTypeid
     if(menu_name=="" ||menu_info==""||this.data.fileList.length == 0){
       wx.showToast({
         title:"请完善菜谱信息",
@@ -76,7 +77,7 @@ Page({
       //说明上传成功，将数据传入到数据库
       let res = await Db.add(menu,{
         menu_name,
-        cate_id,
+        cate_id:recipeTypeid,
         menu_img,
         menu_info,
         menu_view:0,
