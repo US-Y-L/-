@@ -1,0 +1,16 @@
+<view>
+  <!-- 顶部图片 -->
+  <view class="type-img">
+    <image src="../../static/type/banner.jpg"></image>
+  </view>
+
+  <!-- 分类列表 -->
+  <view class="type-list">
+    <block wx:for="{{ types }}">
+      <view class="list-item">
+        <image src="{{ item.src }}"></image>
+        <text>{{ item.typename }}</text>
+      </view>
+    </block>
+  </view>
+</view>

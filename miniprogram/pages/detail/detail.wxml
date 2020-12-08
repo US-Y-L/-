@@ -1,0 +1,65 @@
+<view>
+  <!-- swiper轮播图 -->
+  <swiper class="swiper" indicator-dots="{{ true }}" indicator-color="#fff" indicator-active-color="#eb9834">
+    <block wx:for="{{ imgs }}">
+      <swiper-item>
+        <image src="{{ item }}"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- 名称 -->
+  <view class="info">
+    <view class="info-top">
+      <text space="nbsp">l 营养早餐</text>
+    </view>
+    <view class="info-bottom">
+      <view class="left">
+        <image src="../../imgs/users.png"></image>
+        <text space="nbsp">  放风筝的人</text>
+      </view>
+      <view class="center">
+        <image src="../../imgs/airs.png"></image>
+        <text>1.2w</text>
+      </view>
+      <view class="right">
+        <image src="../../imgs/airs.png"></image>
+        <text>1.5w</text>
+      </view>
+    </view>
+  </view>
+  <view style="width:100%;height:30rpx;background-color:#f9f9f9"></view>
+  <!-- 做法显示 -->
+  <view class="makes">
+    <view class="makes-title">
+      做法
+    </view>
+    <view class="makes-content">
+      鸡蛋：1个<view></view>
+      面粉：适量<view></view>
+      盐：适量<view></view>
+      香油：3勺<view></view>
+      橙子：4片<view></view>
+      胡萝卜：半根<view></view>
+    </view>
+  </view>
+
+  <!-- 底部显示 -->
+  <view class="bottom-set">
+    <view class="set-follow">
+      <!-- 没有关注 -->
+      <view wx:if="{{ false }}">
+        <image src="../../static/detail/follow.png"></image>
+        <text>关注</text>
+      </view>
+
+      <!-- 已经关注 -->
+      <view wx:else>
+        <image src="../../static/detail/followed.png"></image>
+        <text style="color: #ea932a;">已关注</text>
+      </view>
+    </view>
+    <view class="set-concat">
+      <button>联系客服</button>
+    </view>
+  </view>
+</view>
