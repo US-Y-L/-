@@ -4,8 +4,6 @@ import {tableName} from "../../untils/config"
 import {uploader} from"../../untils/upload"
 let {cate,menu} = tableName
 
-console.log(tableName)
-console.log(cate,menu)
 Page({
 
   /**
@@ -83,7 +81,8 @@ Page({
         menu_info,
         menu_view:0,
         menu_collect:0,
-        menu_status:0
+        menu_status:0, //进行逻辑删除时使用，一般不会真正删除用户的数据，而是通过改变状态，通过不同的状态去进行显示与否
+        menu_time:(new Date).getTime() //加入时间戳，便于排序，因为小程序中提供的_id无法进行排序
       })
       if(res._id){
         wx.showToast({

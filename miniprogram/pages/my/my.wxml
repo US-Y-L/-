@@ -44,12 +44,12 @@
         </view>
         <!-- 有东西 -->
         <view class="hot-recipe-list" wx:else>
-          <block wx:for="{{ recipes }}">
+          <block wx:for="{{ recipes }}" wx:key="_id">
             <view class="hot-recipe-list-item" bindlongpress="_delStyle" data-index="{{ index }}">
               <!-- 图片 -->
-              <image src="{{ item.src }}"></image>
+              <image src="{{ item.menu_img[0] }}"></image>
               <!-- 名字 -->
-              <view class="hot-recipe-list-item-title">{{ item.recipeName }}</view>
+              <view class="hot-recipe-list-item-title">{{ item.menu_name }}</view>
               <!-- 发布人及浏览次数 -->
               <view class="hot-recipe-list-item-info">
                 <view class="left">
