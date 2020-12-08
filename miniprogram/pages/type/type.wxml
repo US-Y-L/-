@@ -8,8 +8,8 @@
   <view class="type-list">
     <block wx:for="{{ types }}">
       <view class="list-item">
-        <image src="{{ item.src }}"></image>
-        <text>{{ item.typename }}</text>
+        <image src="../../imgs/index_09.jpg"></image>
+        <text>{{ item.cateName }}</text>
       </view>
     </block>
   </view>

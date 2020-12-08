@@ -1,3 +1,6 @@
+import Db from "../../untils/db"
+import {tableName,admin_id} from "../../untils/config"
+let {user,cate,menu} = tableName
 // pages/type/type.js
 Page({
 
@@ -5,15 +8,23 @@ Page({
    * 页面的初始数据
    */
   data: {
-    types:[
-      {typename:"营养菜谱",'src':"../../static/type/type01.jpg"},
-      {typename:"儿童菜谱",'src':"../../static/type/type02.jpg"},
-      {typename:"家常菜谱",'src':"../../static/type/type03.jpg"},
-      {typename:"主食菜谱",'src':"../../static/type/type04.jpg"},
-      {typename:"西餐菜谱",'src':"../../static/type/type05.jpg"},
-      {typename:"早餐菜谱",'src':"../../static/type/type06.jpg"},
-    ]
+    types:[]
   },
-
+  onLoad(){
+    this._getCates()
+  },
+  _getCates:async function(){
+    wx.showLoading({
+      title:"加载中"
+    })
+    let res = await Db.findAll(cate)
+    if(res.data.length != 0){
+      console.log(res.data)
+      this.setData({
+        types:res.data
+      })
+    }
+    wx.hideLoading()
+  }
  
 })
