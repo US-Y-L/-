@@ -35,4 +35,8 @@
        </view>
     </view>
   </block>
+  <view wx:if="{{lists.length == 0}}">
+    没有相关菜谱，去<navigator url="../pbrecipe/pbrecipe"
+     style="display:inline-block;color:#f0f">添加</navigator>一个吧
+  </view>
 </view>
