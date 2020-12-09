@@ -16,58 +16,7 @@ Page({
     currentPage:1,//记录当前菜单的页数
     isMore:true, //标识下拉时有没有更多的数据，当数据显示完了hi后改为false
   types:[],
-  lists:[
-    {
-      src:"../../static/list/list01.jpg",
-      name:"土豆小番茄披萨",
-      userInfo:{
-        nickName:"林总小图",
-        pic:"../../static/list/users.png"
-      },
-      views:999,
-      follow:100
-    },
-    {
-      src:"../../static/list/list02.jpg",
-      name:"草莓巧克力三明治",
-      userInfo:{
-        nickName:"林总小图",
-        pic:"../../static/list/users.png"
-      },
-      views:88,
-      follow:200
-    },
-    {
-      src:"../../static/list/list03.jpg",
-      name:"法师意大利面",
-      userInfo:{
-        nickName:"林总小图",
-        pic:"../../static/list/users.png"
-      },
-      views:999,
-      follow:100
-    },
-    {
-      src:"../../static/list/list04.jpg",
-      name:"自制拉花",
-      userInfo:{
-        nickName:"林总小图",
-        pic:"../../static/list/users.png"
-      },
-      views:999,
-      follow:100
-    },
-    {
-      src:"../../static/list/list05.jpg",
-      name:"营养早餐",
-      userInfo:{
-        nickName:"林总小图",
-        pic:"../../static/list/users.png"
-      },
-      views:999,
-      follow:100
-    }
-  ]
+  lists:[]
   },
 
   onLoad:function(){
@@ -146,10 +95,18 @@ Page({
     this.setData({
       switchIndex:index
     })
-
+    //获取菜单分类
     if(index == 1 && this.data.types.length == 0){
       this._getMyCate()
     }
+    //获取该用户的收藏菜谱
+    if(index == 2 && this.data.lists.length == 0){
+      this._getMyFollow()
+    }
+  },
+  //获取授权用户的关注
+  _getMyFollow:function(){
+
   },
   //获取用户信息
   _getUserInfo:async function(e){
