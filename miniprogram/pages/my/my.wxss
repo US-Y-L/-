@@ -83,6 +83,8 @@ page{
   position: fixed;
   right: 80rpx;
   bottom: 45rpx;
+  /* 隐藏 */
+  opacity:0;
 }
 
 .no-pbmenu{
