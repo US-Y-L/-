@@ -1,7 +1,7 @@
 <view>
   <!-- swiper轮播图 -->
   <swiper class="swiper" indicator-dots="{{ true }}" indicator-color="#fff" indicator-active-color="#eb9834">
-    <block wx:for="{{ imgs }}">
+    <block wx:for="{{ imgs }}"  wx:key="*this">
       <swiper-item>
         <image src="{{ item }}"></image>
       </swiper-item>
@@ -10,20 +10,20 @@
   <!-- 名称 -->
   <view class="info">
     <view class="info-top">
-      <text space="nbsp">l 营养早餐</text>
+      <text space="nbsp">l {{userInfo.cateName}}</text>
     </view>
     <view class="info-bottom">
       <view class="left">
-        <image src="../../imgs/users.png"></image>
-        <text space="nbsp">  放风筝的人</text>
+        <image src="{{userInfo.imgUrl}}"></image>
+        <text space="nbsp">{{userInfo.nickName}}</text>
       </view>
       <view class="center">
         <image src="../../imgs/airs.png"></image>
-        <text>1.2w</text>
+        <text>{{userInfo.menu_collect}}</text>
       </view>
       <view class="right">
         <image src="../../imgs/airs.png"></image>
-        <text>1.5w</text>
+        <text>{{userInfo.menu_view}}</text>
       </view>
     </view>
   </view>
@@ -34,24 +34,18 @@
       做法
     </view>
     <view class="makes-content">
-      鸡蛋：1个<view></view>
-      面粉：适量<view></view>
-      盐：适量<view></view>
-      香油：3勺<view></view>
-      橙子：4片<view></view>
-      胡萝卜：半根<view></view>
+      {{userInfo.menu_info}}<view></view>
     </view>
   </view>
 
   <!-- 底部显示 -->
   <view class="bottom-set">
-    <view class="set-follow">
+    <view class="set-follow" bindtap="_setFollow">
       <!-- 没有关注 -->
-      <view wx:if="{{ false }}">
+      <view wx:if="{{!isFollow}}">
         <image src="../../static/detail/follow.png"></image>
         <text>关注</text>
       </view>
-
       <!-- 已经关注 -->
       <view wx:else>
         <image src="../../static/detail/followed.png"></image>
