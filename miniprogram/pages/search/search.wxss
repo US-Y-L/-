@@ -4,7 +4,7 @@ page{
 }
 .search {
   height: 130rpx;
-  background-color: #ea932a;
+  background-color: #3f64df;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,7 +14,7 @@ page{
   
   width: 644rpx;
   height: 65rpx;
-  background-color: #f2ba77;
+  background-color: rgb(33, 143, 5);
   display: flex;
   justify-content: space-between;
   border-radius: 32rpx;

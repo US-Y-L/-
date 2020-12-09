@@ -108,6 +108,9 @@ Page({
   _getMyFollow: async function(){
     let _openid = wx.getStorageSync("_openid");
     let res = await Db.findAll(collect,{_openid}) //得到的是菜谱的id
+    wx.showLoading({
+      title:"加载中"
+    })
     if(res.data.length != 0){ 
       //根据菜谱的id去取菜谱的信息
       let menuArr =res.data.map(item=>{
@@ -132,6 +135,7 @@ Page({
         console.log(this.data.lists)
       }
     }
+    wx.hideLoading()
   },
   //获取用户信息
   _getUserInfo:async function(e){
