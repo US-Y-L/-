@@ -1,3 +1,6 @@
+import Db from "../../untils/db"
+import {tableName,admin_id} from "../../untils/config"
+let {user,cate,menu} = tableName
 // pages/detail/detail.js
 Page({
 
@@ -14,6 +17,19 @@ Page({
       ]
   },
   onLoad:function(option){
-    console.log(option)
+    this._getCateInfo(option)
+  },
+  //查询信息
+  _getCateInfo:async function(option){
+    let {id,menuName} = option;
+    wx.setNavigationBarTitle({
+      title:menuName
+    })
+    let res = await Db.findByWhere(menu,{_id:id,menu_status:0});
+    console.log(res);
+    if(res.data.length != 0){
+      let {_openid} = res.data
+      
+    }
   }
 })
