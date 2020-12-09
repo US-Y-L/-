@@ -2,7 +2,7 @@
 //连接数据库
 import Db from "../../untils/db"
 import {tableName,admin_id} from "../../untils/config"
-const {user,cate,menu} = tableName
+const {user,cate,menu,collect} = tableName
 Page({
 
   /**
@@ -105,8 +105,33 @@ Page({
     }
   },
   //获取授权用户的关注
-  _getMyFollow:function(){
+  _getMyFollow: async function(){
+    let _openid = wx.getStorageSync("_openid");
+    let res = await Db.findAll(collect,{_openid}) //得到的是菜谱的id
+    if(res.data.length != 0){ 
+      //根据菜谱的id去取菜谱的信息
+      let menuArr =res.data.map(item=>{
+        return item.menu_id
+      })
+      res = await Db.findAll(menu,{_id:Db._.in(menuArr)})
+      // console.log(res)
 
+      if(res.data.length != 0){
+        let tasks = []
+        res.data.forEach(item=>{
+          let promise = Db.findByWhere(user,{_openid:item._openid})
+          tasks.push(promise)
+        })
+        let res1 = await Promise.all(tasks)
+        res.data.forEach((item,index)=>{
+          item.userInfo = res1[index].data[0]
+        })
+        this.setData({
+          lists:res.data
+        })
+        console.log(this.data.lists)
+      }
+    }
   },
   //获取用户信息
   _getUserInfo:async function(e){

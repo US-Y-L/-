@@ -85,20 +85,20 @@
     <!-- 关注列表 -->
     <view>
       <!-- 没有关注 -->
-      <view class="no-follow" wx:if="{{ lists.length <=0 }}">
+      <view class="no-follow" wx:if="{{ lists.length ==0 && switchIndex==2}}">
         <image src="../../static/my/nofollow.jpg"></image>
         <view>您还没关注哦</view>
       </view>
       <!-- 关注菜单 -->
-      <view style="display:{{switchIndex==2?'block':'none'}}">
-        <block wx:for="{{ lists }}">
-          <view class="list">
-            <image src="{{ item.src }}" class="recipe-image"></image>
+      <view style="display:{{switchIndex==2?'block':'none'}}" >
+        <block wx:for="{{ lists }}"  wx:key="_id" >
+          <view class="list"  bindtap="_goDetail" data-index="{{index}}">
+            <image src="{{ item.menu_img[0] }}" class="recipe-image"></image>
             <!-- 基本信息 -->
             <view class="list-info">
-              <view class="list-name">{{ item.name }}</view>
+              <view class="list-name">{{ item.menu_name }}</view>
               <view class="list-info-userinfo">
-                <image src="{{ item.userInfo.pic }}"></image>
+                <image src="{{ item.userInfo.avatarUrl }}"></image>
                 <text>{{ item.userInfo.nickName }}</text>
               </view>
               <view class="xing">
@@ -108,11 +108,11 @@
               <view class="number">
                 <view>
                   <image src="../../static/list/followed.png"></image>
-                  <text>{{ item.follow }}</text>
+                  <text>{{ item.menu_collect }}</text>
                 </view>
                 <view>
                   <image src="../../static/list/airs.png"></image>
-                  <text>{{ item.views }}</text>
+                  <text>{{ item.menu_view }}</text>
                 </view>
               </view>
             </view>
