@@ -61,7 +61,7 @@ const updateById = (table,id,data)=>{
 }
 
 //通过分页的方式获取数据
-const findByPage=(table,where={},p=1,limit=6,order=
+const findByPage = (table,where={},p=1,limit=6,order=
   {field:"menu_time",sort:"asc"})=>{
     let start = (p-1)*limit
   return db.collection(table).where(where)
