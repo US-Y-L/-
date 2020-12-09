@@ -134,5 +134,36 @@ Page({
     wx.setNavigationBarTitle({
       title:menuName
     })
+  },
+  //分享给朋友
+  //小程序本身具有分享的功能，但是分享的内容是小程序默认的，做一个自定义分享的功能
+  //1、用户点击默认的分享，分享的是整个小程序，用户点击分享的内容进入的是小程序的首页
+  //2、用户点击按钮分享，分享的是当前的详情页面，用户点击分享的内容进入的是小程序的对应的详情页
+  onShareAppMessage:function(e){
+    if(e.from=="menu"){ //右上角默认的分享
+      return {
+        title:"来看看吧",
+        imageUrl:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3563308633,2180640064&fm=11&gp=0.jpg",
+        path:"../index/index" //设置点击图片进入小程序的哪个页面
+      }
+    }
+    if(e.from=="button"){//点击按钮进行的分享
+      return{
+        title:`如何做《${this.data.userInfo.menu_name}》`,
+        imgUrl:this.data.userInfo.menu_img[0],
+        path:"/pages/detail/detail?id="+this.data.id+"&menuName="+this.data.userInfo.menu_name
+      }
+    }
+  },
+  //分享给朋友圈,默认不开通，可以通过设置开通分享朋友圈功能  2.11.3版本库开始支持
+  //只能展示，不能有交互效果
+  //分享给朋友圈，首先完成分享给朋友 page.onShareAppMessage
+  onShareTimeLine(){
+    return{
+      title:"来做菜呀",
+      imageUrl:"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1152190786,4254404981&fm=11&gp=0.jpg",
+      //query里写跳转页面时携带的参数，只写?后面的就行
+      query:"id="+this.data.id+"&menuName="+this.data.userInfo.menu_name
+    }
   }
 })

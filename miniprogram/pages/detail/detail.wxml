@@ -53,7 +53,8 @@
       </view>
     </view>
     <view class="set-concat">
-      <button>联系客服</button>
+      <!-- 此时这个按钮就具有了分享的功能 -->
+      <button open-type="share">分享给朋友</button>
     </view>
   </view>
 </view>
