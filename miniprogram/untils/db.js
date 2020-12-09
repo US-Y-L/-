@@ -59,6 +59,10 @@ const updateById = (table,id,data)=>{
     data
   })
 }
+//用户取消关注时的操作
+const removeByWhere = (table,where={})=>{
+  return db.collection(table).where(where).remove()
+}
 
 //通过分页的方式获取数据
 const findByPage = (table,where={},p=1,limit=6,order=
@@ -79,5 +83,7 @@ export default {
   removeById,
   updateById,
   findByPage,
-  _
+  _,
+  db,
+  removeByWhere
 }
