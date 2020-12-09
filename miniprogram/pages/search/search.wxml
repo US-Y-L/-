@@ -2,8 +2,10 @@
   <!-- 搜索栏 -->
   <view class="search">
     <view class="search-box">
-      <input type="text" placeholder="请输入菜谱名称" placeholder-class="p-box"/>
-      <icon type="search" color="#fff" size="30"></icon>
+      <input type="text" bindinput="_inputKeyword"
+       placeholder="请输入菜谱名称" placeholder-class="p-box"/>
+      <icon bindtap="_search"
+      type="search" color="#fff" size="30"></icon>
     </view>
   </view>
 
@@ -23,12 +25,13 @@
     <view class="hot-search-title">
       近期搜索
     </view>
-    <view class="hot-search-list">
-      <view wx:for="{{ [1,2,3,4] }}">
-         可乐鸡翅
+    <view class="hot-search-list" wx:if="{{lasts.length >= 0}}">
+      <view wx:for="{{ lasts }}" wx:key="{{item}}"
+       bindtap="_goList" data-index="{{index}}">
+         {{item}}
       </view>
     </view>
-    <view style="display:none">
+    <view wx:else>
       暂无记录
     </view>
 
