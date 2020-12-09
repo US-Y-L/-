@@ -1,26 +1,35 @@
 <view>
-  <block wx:for="{{ lists }}">
-    <view class="list">
-       <image src="{{ item.src }}" class="recipe-image"></image>
+  <block wx:for="{{ lists }}" wx:key="{{item._id}}">
+    <view class="list" bindtap="_goDetail" data-index="{{index}}">
+       <image src="{{ item.menu_img[0] }}" class="recipe-image"></image>
        <!-- 基本信息 -->
        <view class="list-info">
-          <view class="list-name">{{ item.name }}</view>
+          <view class="list-name">{{ item.menu_name }}</view>
           <view class="list-info-userinfo">
-            <image src="{{ item.userInfo.pic }}"></image>
-            <text>{{ item.userInfo.nickName }}</text>
+            <image src="{{ item.imgUrl }}"></image>
+            <text>{{ item.nickName }}</text>
           </view>
           <view class="xing">
             <!-- 星星 -->
-            <image src="../../static/list/xing3.png"></image>
+            <image wx:if="{{item.menu_collect <= 10}}"
+             src="../../static/list/xing1.png"></image>
+             <image wx:if="{{item.menu_collect <= 50 && item.menu_collect >10 }}"
+             src="../../static/list/xing2.png"></image>
+             <image wx:if="{{item.menu_collect <= 100 && item.menu_collect > 50}}"
+             src="../../static/list/xing3.png"></image>
+             <image wx:if="{{item.menu_collect <= 200 && item.menu_collect > 100}}"
+             src="../../static/list/xing4.png"></image>
+             <image wx:if="{{item.menu_collect > 200}}"
+             src="../../static/list/xing5.png"></image>
           </view>
           <view class="number">
             <view>  
               <image src="../../static/list/followed.png"></image>
-              <text>{{ item.follow }}</text>
+              <text>{{ item.menu_collect }}</text>
             </view>
             <view>
               <image src="../../static/list/airs.png"></image>
-              <text>{{ item.views }}</text> 
+              <text>{{ item.menu_view }}</text> 
             </view>
           </view>
        </view>
