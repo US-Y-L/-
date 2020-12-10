@@ -13,6 +13,7 @@ Page({
     id:"", //分类id
     flag:0, //0代表是从分类列表过来的
     keyword:"",
+    isZero:false
   },
   onLoad:function(option){
     this._setOptions(option)
@@ -60,12 +61,16 @@ Page({
       this.setData({
         lists:res.data
       })
+
     }else{
       wx.showToast({
         title:"暂无相关菜谱",
         icon:"none"
       })
-      //后续可以加入添加菜谱操作
+      //控制添加菜谱的显示
+      this.setData({
+        isZero:true
+      })
     }
     wx.hideLoading()
   },
